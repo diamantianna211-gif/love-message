@@ -5,12 +5,13 @@
 <style>
 body {
   font-family: Arial; 
-  text-align: center; 
-  margin: 0; 
-  padding: 50px 0; 
-  background: #fff0f5; 
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #fff0f5;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -22,8 +23,8 @@ h1 {
   width: 300px;
   border-radius: 15px;
   opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 2s, transform 2s;
+  transform: scale(0.5);
+  transition: opacity 2s ease, transform 2s ease;
 }
 
 button {
@@ -48,12 +49,12 @@ button:hover { background: #ff1e4d; }
 
 <script>
 // Zoom-in και fade-in για τη φωτογραφία σας
-const us = document.getElementById("us");
 window.onload = () => {
+  const us = document.getElementById("us");
   setTimeout(() => {
     us.style.opacity = 1;
     us.style.transform = "scale(1)";
-  }, 100);
+  }, 200); // λίγο delay για smooth effect
 };
 </script>
 
