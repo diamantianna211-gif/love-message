@@ -1,53 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Click Me ❤️</title>
-
+<title>Surprise for you ❤️</title>
 <style>
-body{
-    font-family: Arial;
-    text-align: center;
-    background-color: #f2f2f2;
-    margin-top: 120px;
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #fff0f5;
+  overflow: hidden;
+  margin: 50px 0;
 }
 
-button{
-    padding: 15px 35px;
-    font-size: 20px;
-    background-color: #ff4d6d;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+h1 {
+  color: #ff4d6d;
 }
 
-button:hover{
-    background-color: #ff1e4d;
+button {
+  padding: 15px 35px;
+  font-size: 20px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
-#message{
-    display:none;
-    font-size: 28px;
-    margin-top: 40px;
+button:hover {
+  background: #ff1e4d;
+}
+
+#message {
+  display: none;
+  font-size: 28px;
+  margin-top: 30px;
+  min-height: 40px;
+  color: #333;
+}
+
+#dog {
+  display: none;
+  width: 250px;
+  margin-top: 20px;
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+#hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  color: red;
+  font-size: 24px;
+  animation: float 4s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
-
 </head>
-
 <body>
 
-<h2>Hey you 👀</h2>
-<p>Click the button</p>
+<h1>Hey you ❤️</h1>
+<img src="us.jpg" width="300" style="border-radius:15px">
+<br>
+<button onclick="showSurprise()">Open your surprise</button>
 
-<button onclick="showMessage()">Open your surprise</button>
-
-<div id="message">
-❤️ I love you and I am so proud of you ❤️
-</div>
+<div id="message"></div>
+<img id="dog" src="dog.jpg">
+<div id="hearts"></div>
 
 <script>
-function showMessage() {
-document.getElementById("message").style.display = "block";
+// Hearts animation
+function createHearts() {
+  setInterval(function() {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+    document.getElementById("hearts").appendChild(heart);
+    setTimeout(() => { heart.remove() }, 4000);
+  }, 300);
+}
+
+// Typing effect for message
+function typeMessage(message, element, index = 0) {
+  if (index < message.length) {
+    element.innerHTML += message.charAt(index);
+    setTimeout(() => typeMessage(message, element, index + 1), 50);
+  }
+}
+
+// Show surprise
+function showSurprise() {
+  createHearts();
+  // Show dog with fade-in
+  const dog = document.getElementById("dog");
+  dog.style.display = "block";
+  setTimeout(() => { dog.style.opacity = 1 }, 100);
+
+  // Show typing message after 0.5s
+  const msgEl = document.getElementById("message");
+  msgEl.style.display = "block";
+  msgEl.innerHTML = "";
+  const msgText = "❤️ I love you and I am so proud of you ❤️";
+  typeMessage(msgText, msgEl);
 }
 </script>
 
