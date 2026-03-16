@@ -1,159 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Surprise for you ❤️</title>
+<title>Click for a surprise ❤️</title>
 <style>
-body {
-  font-family: Arial;
-  text-align: center;
-  background: #fff0f5;
-  overflow: hidden;
-  margin: 50px 0;
-}
-
-h1 {
-  color: #ff4d6d;
-}
-
+body { font-family: Arial; text-align:center; margin-top:100px; background:#fff0f5; }
 button {
-  padding: 15px 35px;
-  font-size: 20px;
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  margin-top: 20px;
+  padding:20px 40px; font-size:22px;
+  background:#ff4d6d; color:white; border:none; border-radius:12px; cursor:pointer;
 }
-
-button:hover {
-  background: #ff1e4d;
-}
-
-#message {
-  display: none;
-  font-size: 28px;
-  margin-top: 30px;
-  min-height: 40px;
-  color: #333;
-}
-
-#dog {
-  display: none;
-  width: 250px;
-  margin-top: 20px;
-  border-radius: 15px;
-  opacity: 0;
-  transition: opacity 2s;
-}
-
-#hearts, #confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.heart {
-  position: absolute;
-  color: red;
-  font-size: 24px;
-  animation: float 4s linear infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(100vh); opacity: 1; }
-  100% { transform: translateY(-10vh); opacity: 0; }
-}
-
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  opacity: 0.7;
-  animation: confetti-fall 3s linear forwards;
-}
-
-@keyframes confetti-fall {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-}
+button:hover { background:#ff1e4d; }
+img { width:300px; border-radius:15px; }
 </style>
 </head>
 <body>
 
 <h1>Hey you ❤️</h1>
-
-<img id="usImage" src="" width="300" style="border-radius:15px"><br>
-<button onclick="showSurprise()">Open your surprise</button>
-
-<div id="message"></div>
-<img id="dog" src="">
-<div id="hearts"></div>
-<div id="confetti"></div>
-
-<script>
-// Set images dynamically so path works anywhere
-const usImage = document.getElementById("usImage");
-const dogImage = document.getElementById("dog");
-
-// Αν οι εικόνες είναι σε φάκελο "images", αλλιώς στο root
-usImage.src = "images/us.jpg";
-dogImage.src = "images/dog.jpg";
-
-// Hearts animation
-function createHearts() {
-  setInterval(function() {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (20 + Math.random() * 20) + "px";
-    document.getElementById("hearts").appendChild(heart);
-    setTimeout(() => { heart.remove() }, 4000);
-  }, 300);
-}
-
-// Confetti animation
-function createConfetti() {
-  for (let i = 0; i < 50; i++) {
-    let c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.backgroundColor = ["#ff4d6d","#ffdd57","#6a0dad","#00d4ff","#ff69b4"][Math.floor(Math.random()*5)];
-    document.getElementById("confetti").appendChild(c);
-    setTimeout(() => c.remove(), 3000);
-  }
-}
-
-// Typing effect for message
-function typeMessage(message, element, index = 0) {
-  if (index < message.length) {
-    element.innerHTML += message.charAt(index);
-    setTimeout(() => typeMessage(message, element, index + 1), 50);
-  }
-}
-
-// Show surprise
-function showSurprise() {
-  createHearts();
-  createConfetti();
-
-  // Show dog with fade-in
-  dogImage.style.display = "block";
-  setTimeout(() => { dogImage.style.opacity = 1 }, 100);
-
-  // Show typing message
-  const msgEl = document.getElementById("message");
-  msgEl.style.display = "block";
-  msgEl.innerHTML = "";
-  const msgText = "❤️ I love you and I am so proud of you ❤️";
-  typeMessage(msgText, msgEl);
-}
-</script>
+<img src="us.jpg" alt="Us">
+<br><br>
+<button onclick="window.location.href='surprise.html'">Open your surprise</button>
 
 </body>
 </html>
