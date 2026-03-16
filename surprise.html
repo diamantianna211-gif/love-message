@@ -8,28 +8,33 @@ html, body {
   padding: 0;
   height: 100%;
   background: #fff0f5;
+  overflow: hidden;
+  font-family: Arial;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
 #dog {
   width: 300px;
-  display: block; /* Κάνει την εικόνα block για να κεντραριστεί σωστά */
-  margin: 0 auto; /* Κεντράρισμα οριζόντια */
   border-radius: 15px;
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 2s ease, transform 2s ease;
+  display: block;
 }
 
 #message {
   font-size: 28px;
   color: #333;
   opacity: 0;
-  transition: opacity 2s ease;
   text-align: center;
   max-width: 80%;
   margin-top: 20px;
@@ -37,8 +42,8 @@ html, body {
 
 #hearts, #confetti {
   position: fixed;
-  top: 0;
-  left: 0;
+  top:0;
+  left:0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -72,13 +77,22 @@ html, body {
 </head>
 <body>
 
-<img src="dog.jpg.jpeg" id="dog" alt="Dog">
-<div id="message"></div>
+<div class="wrapper">
+  <img src="dog.jpg.jpeg" id="dog" alt="Dog">
+  <div id="message"></div>
+</div>
+
 <div id="hearts"></div>
 <div id="confetti"></div>
 
+<!-- Audio -->
+<audio id="song" autoplay>
+  <source src="song.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <script>
-// Κεντράρει και εμφανίζει σκύλο με zoom-in
+// Zoom-in και fade-in σκύλου
 window.onload = () => {
   const dog = document.getElementById("dog");
   setTimeout(() => {
@@ -86,12 +100,12 @@ window.onload = () => {
     dog.style.transform = "scale(1)";
   }, 200);
 
-  // Μήνυμα με fade-in letter-by-letter
+  // Μήνυμα letter-by-letter
   const msgEl = document.getElementById("message");
   const msgText = "❤️ I love you and I am so proud of you ❤️";
   let i = 0;
   function typeLetter() {
-    if(i < msgText.length) {
+    if(i < msgText.length){
       msgEl.innerHTML += msgText.charAt(i);
       msgEl.style.opacity = 1;
       i++;
@@ -100,7 +114,7 @@ window.onload = () => {
   }
   setTimeout(typeLetter, 1500);
 
-  // Hearts animation
+  // Hearts
   setInterval(() => {
     let heart = document.createElement("div");
     heart.className = "heart";
@@ -111,8 +125,8 @@ window.onload = () => {
     setTimeout(()=>heart.remove(), 4000);
   }, 300);
 
-  // Confetti animation
-  for(let j=0; j<50; j++) {
+  // Confetti
+  for(let j=0; j<50; j++){
     let c = document.createElement("div");
     c.className = "confetti";
     c.style.left = Math.random()*100 + "vw";
@@ -120,6 +134,10 @@ window.onload = () => {
     document.getElementById("confetti").appendChild(c);
     setTimeout(()=>c.remove(), 3000);
   }
+
+  // Play audio (σε περίπτωση που autoplay δεν δουλεύει)
+  const song = document.getElementById("song");
+  song.play().catch(()=>console.log("Autoplay blocked"));
 };
 </script>
 
