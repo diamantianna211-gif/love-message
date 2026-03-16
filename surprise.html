@@ -3,64 +3,127 @@
 <head>
 <title>Your surprise ❤️</title>
 <style>
-body { font-family: Arial; text-align:center; margin-top:50px; background:#fff0f5; overflow:hidden; }
-#dog { width:250px; margin-top:20px; border-radius:15px; opacity:0; transition: opacity 2s; }
-#message { font-size:28px; margin-top:30px; min-height:40px; color:#333; }
-#hearts, #confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; }
-.heart { position:absolute; color:red; font-size:24px; animation:float 4s linear infinite; }
-@keyframes float { 0%{transform:translateY(100vh); opacity:1;} 100%{transform:translateY(-10vh); opacity:0;} }
-.confetti { position:absolute; width:10px; height:10px; opacity:0.7; animation:confetti-fall 3s linear forwards; }
-@keyframes confetti-fall { 0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(100vh) rotate(360deg); opacity:0;} }
+body {
+  font-family: Arial; 
+  text-align: center; 
+  margin: 0; 
+  padding: 50px 0; 
+  background: #fff0f5; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dog {
+  width: 300px;
+  border-radius: 15px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 2s, transform 2s;
+  margin-top: 20px;
+}
+
+#message {
+  font-size: 28px;
+  margin-top: 30px;
+  min-height: 50px;
+  color: #333;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+#hearts, #confetti {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  color: red;
+  font-size: 24px;
+  animation: float 4s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0.7;
+  animation: confetti-fall 3s linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); opacity:0; }
+}
 </style>
 </head>
 <body>
 
-<img src="dog.jpg.jpeg" id="dog">
+<img src="dog.jpg.jpeg" id="dog" alt="Dog">
 <div id="message"></div>
 <div id="hearts"></div>
 <div id="confetti"></div>
 
 <script>
-// Show dog with fade-in
+// Fade-in & zoom-in for dog
 const dog = document.getElementById("dog");
-dog.style.display = "block";
-setTimeout(()=>{ dog.style.opacity = 1 }, 100);
+setTimeout(() => {
+  dog.style.opacity = 1;
+  dog.style.transform = "scale(1)";
+}, 100);
+
+// Show message with fade-in letter-by-letter
+const msgEl = document.getElementById("message");
+const msgText = "❤️ I love you and I am so proud of you ❤️";
+
+function typeMessage(msg, el, i=0) {
+  if(i < msg.length) {
+    el.innerHTML += msg.charAt(i);
+    el.style.opacity = 1;
+    setTimeout(() => typeMessage(msg, el, i+1), 50);
+  }
+}
+setTimeout(() => typeMessage(msgText, msgEl), 1000); // ξεκινάει μετά το dog fade-in
 
 // Hearts animation
 function createHearts() {
   setInterval(function(){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(20+Math.random()*20)+"px";
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (20 + Math.random()*20) + "px";
     document.getElementById("hearts").appendChild(heart);
-    setTimeout(()=>{heart.remove()},4000);
-  },300);
+    setTimeout(()=>heart.remove(), 4000);
+  }, 300);
 }
 
 // Confetti animation
 function createConfetti() {
-  for(let i=0;i<50;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.backgroundColor=["#ff4d6d","#ffdd57","#6a0dad","#00d4ff","#ff69b4"][Math.floor(Math.random()*5)];
+  for(let i=0; i<50; i++){
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.backgroundColor = ["#ff4d6d","#ffdd57","#6a0dad","#00d4ff","#ff69b4"][Math.floor(Math.random()*5)];
     document.getElementById("confetti").appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+    setTimeout(()=>c.remove(), 3000);
   }
 }
 
-// Typing effect
-function typeMessage(msg, el, i=0){
-  if(i<msg.length){ el.innerHTML+=msg.charAt(i); setTimeout(()=>typeMessage(msg,el,i+1),50); }
-}
-
-// Run all
+// Run animations
 createHearts();
 createConfetti();
-const msgEl=document.getElementById("message");
-typeMessage("❤️ I love you and I am so proud of you ❤️", msgEl);
 </script>
 
 </body>
