@@ -47,7 +47,7 @@ button:hover {
   transition: opacity 2s;
 }
 
-#hearts {
+#hearts, #confetti {
   position: fixed;
   top: 0;
   left: 0;
@@ -67,20 +67,43 @@ button:hover {
   0% { transform: translateY(100vh); opacity: 1; }
   100% { transform: translateY(-10vh); opacity: 0; }
 }
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  opacity: 0.7;
+  animation: confetti-fall 3s linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
 </style>
 </head>
 <body>
 
 <h1>Hey you ❤️</h1>
-<img src="us.jpg" width="300" style="border-radius:15px">
-<br>
+
+<img id="usImage" src="" width="300" style="border-radius:15px"><br>
 <button onclick="showSurprise()">Open your surprise</button>
 
 <div id="message"></div>
-<img id="dog" src="dog.jpg">
+<img id="dog" src="">
 <div id="hearts"></div>
+<div id="confetti"></div>
 
 <script>
+// Set images dynamically so path works anywhere
+const usImage = document.getElementById("usImage");
+const dogImage = document.getElementById("dog");
+
+// Αν οι εικόνες είναι σε φάκελο "images", αλλιώς στο root
+usImage.src = "images/us.jpg";
+dogImage.src = "images/dog.jpg";
+
 // Hearts animation
 function createHearts() {
   setInterval(function() {
@@ -94,6 +117,18 @@ function createHearts() {
   }, 300);
 }
 
+// Confetti animation
+function createConfetti() {
+  for (let i = 0; i < 50; i++) {
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.backgroundColor = ["#ff4d6d","#ffdd57","#6a0dad","#00d4ff","#ff69b4"][Math.floor(Math.random()*5)];
+    document.getElementById("confetti").appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
 // Typing effect for message
 function typeMessage(message, element, index = 0) {
   if (index < message.length) {
@@ -105,12 +140,13 @@ function typeMessage(message, element, index = 0) {
 // Show surprise
 function showSurprise() {
   createHearts();
-  // Show dog with fade-in
-  const dog = document.getElementById("dog");
-  dog.style.display = "block";
-  setTimeout(() => { dog.style.opacity = 1 }, 100);
+  createConfetti();
 
-  // Show typing message after 0.5s
+  // Show dog with fade-in
+  dogImage.style.display = "block";
+  setTimeout(() => { dogImage.style.opacity = 1 }, 100);
+
+  // Show typing message
   const msgEl = document.getElementById("message");
   msgEl.style.display = "block";
   msgEl.innerHTML = "";
