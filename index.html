@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Click Me ❤️</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align: center;
+    background-color: #f2f2f2;
+    margin-top: 120px;
+}
+
+button{
+    padding: 15px 35px;
+    font-size: 20px;
+    background-color: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #ff1e4d;
+}
+
+#message{
+    display:none;
+    font-size: 28px;
+    margin-top: 40px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Hey you 👀</h2>
+<p>Click the button</p>
+
+<button onclick="showMessage()">Open your surprise</button>
+
+<div id="message">
+❤️ I love you and I am so proud of you ❤️
+</div>
+
+<script>
+function showMessage() {
+document.getElementById("message").style.display = "block";
+}
+</script>
+
+</body>
+</html>
