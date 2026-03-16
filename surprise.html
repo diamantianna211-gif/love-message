@@ -4,33 +4,34 @@
 <title>Your surprise ❤️</title>
 <style>
 body {
-  font-family: Arial; 
-  text-align: center; 
-  margin: 0; 
-  padding: 50px 0; 
-  background: #fff0f5; 
-  overflow: hidden;
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #fff0f5;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 #dog {
   width: 300px;
   border-radius: 15px;
   opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 2s, transform 2s;
-  margin-top: 20px;
+  transform: scale(0.5);
+  transition: opacity 2s ease, transform 2s ease;
+  margin-bottom: 20px;
 }
 
 #message {
   font-size: 28px;
-  margin-top: 30px;
-  min-height: 50px;
   color: #333;
   opacity: 0;
-  transition: opacity 2s;
+  transition: opacity 2s ease;
+  text-align: center;
+  max-width: 80%;
 }
 
 #hearts, #confetti {
@@ -76,29 +77,30 @@ body {
 <div id="confetti"></div>
 
 <script>
-// Fade-in & zoom-in for dog
-const dog = document.getElementById("dog");
-setTimeout(() => {
-  dog.style.opacity = 1;
-  dog.style.transform = "scale(1)";
-}, 100);
+// Κεντράρει και εμφανίζει σκύλο με zoom-in
+window.onload = () => {
+  const dog = document.getElementById("dog");
+  setTimeout(() => {
+    dog.style.opacity = 1;
+    dog.style.transform = "scale(1)";
+  }, 200);
 
-// Show message with fade-in letter-by-letter
-const msgEl = document.getElementById("message");
-const msgText = "❤️ I love you and I am so proud of you ❤️";
-
-function typeMessage(msg, el, i=0) {
-  if(i < msg.length) {
-    el.innerHTML += msg.charAt(i);
-    el.style.opacity = 1;
-    setTimeout(() => typeMessage(msg, el, i+1), 50);
+  // Μήνυμα με fade-in letter-by-letter
+  const msgEl = document.getElementById("message");
+  const msgText = "❤️ I love you and I am so proud of you ❤️";
+  let i = 0;
+  function typeLetter() {
+    if(i < msgText.length) {
+      msgEl.innerHTML += msgText.charAt(i);
+      msgEl.style.opacity = 1;
+      i++;
+      setTimeout(typeLetter, 50);
+    }
   }
-}
-setTimeout(() => typeMessage(msgText, msgEl), 1000); // ξεκινάει μετά το dog fade-in
+  setTimeout(typeLetter, 1500); // ξεκινάει μετά το dog fade-in
 
-// Hearts animation
-function createHearts() {
-  setInterval(function(){
+  // Hearts animation
+  setInterval(() => {
     let heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
@@ -107,11 +109,9 @@ function createHearts() {
     document.getElementById("hearts").appendChild(heart);
     setTimeout(()=>heart.remove(), 4000);
   }, 300);
-}
 
-// Confetti animation
-function createConfetti() {
-  for(let i=0; i<50; i++){
+  // Confetti animation
+  for(let j=0; j<50; j++) {
     let c = document.createElement("div");
     c.className = "confetti";
     c.style.left = Math.random()*100 + "vw";
@@ -119,11 +119,7 @@ function createConfetti() {
     document.getElementById("confetti").appendChild(c);
     setTimeout(()=>c.remove(), 3000);
   }
-}
-
-// Run animations
-createHearts();
-createConfetti();
+};
 </script>
 
 </body>
